@@ -1,0 +1,5 @@
+npx => sirve para utilizar modulos sin tener que descargarlos.
+npx gitignore node
+git init
+npm init -y
+git status
