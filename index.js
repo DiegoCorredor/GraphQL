@@ -8,16 +8,41 @@ app.set('port', process.env.PORT || 3000)
 
 //data
 const {missionaries} = require('./data/missionaries.json')
-console.log(missionaries)
-//schema
-const root = {
-    message: () => "Hello World! This is working"
-}
+//console.log(missionaries)
 
 const schema = buildSchema(`
     type Query {
-        message: String
+        missionarie(id: Int!): Missionarie
+        missionaries(formation: String): [Missionarie]
+    },
+    type Missionarie {
+        id: Int
+        name: String
+        dni: Int
+        age: Int
+        formation: String
+        province: String
     }`)
+
+const getMissionarie = (args)=>{
+    let id = args.id
+    return missionaries.filter(missionarie => missionarie.id == id)[0]
+}
+
+const getMissionaries = (args)=>{
+    if(args.formation){
+        let formation = args.formation
+        return missionaries.filter(missionarie => missionarie.formation == formation)
+    }else{
+        return missionaries
+    }
+}
+
+//schema
+const root = {
+    missionarie : getMissionarie,
+    missionaries : getMissionaries
+}
 
 app.use('/graphql',express_graphql({
     schema: schema,

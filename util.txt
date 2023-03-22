@@ -3,3 +3,39 @@ npx gitignore node
 git init
 npm init -y
 git status
+
+
+#query getMissionarie($missionarieId: Int!) {
+#  missionarie(id:$missionarieId){
+#    id
+#    name
+#  }
+#}
+
+
+#query getMissioneries($formationMissionarie: String){
+#  missionaries(formation: $formationMissionarie){
+#    name
+#    formation
+#    province
+#  }
+#}
+
+
+query getMissionariesWithFragments($id1:Int!,$id2:Int!){
+  missionarie1 : missionarie(id:$id1){
+    ...missionarieFieldsFragment
+  }
+  missionarie2: missionarie(id:$id2){
+    ...missionarieFieldsFragment
+  }
+}
+
+fragment missionarieFieldsFragment on Missionarie{
+  id
+  name
+  formation
+  province
+  dni
+  age
+}
